@@ -297,13 +297,19 @@ function handleApiAiResponse(sender, response) {
 	let parameters = response.result.parameters;
 
 	sendTypingOff(sender);
-
+    console.log('responseText'+responseText);
+    console.log('responseData'+responseData);
+    console.log('messages'+messages);
+    console.log('action'+action);
+    console.log('contexts'+contexts);
+    console.log('parameters'+parameters);
 	if (isDefined(messages) && (messages.length == 1 && messages[0].type != 0 || messages.length > 1)) {
 		let timeoutInterval = 1100;
 		let previousType ;
 		let cardTypes = [];
 		let timeout = 0;
-        console.log('Known query3');
+
+
 		for (var i = 0; i < messages.length; i++) {
 
 			if ( previousType == 1 && (messages[i].type != 1 || i == messages.length - 1)) {
