@@ -188,18 +188,18 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			let replies=[
                 {
                     "content_type":"text",
-                    "title":"Accountant",
-                    "payload":"Accountant"
+                    "title":"Accountant1",
+                    "payload":"Accountant1"
                 },
                 {
                     "content_type":"text",
-                    "title":"Sale Person",
-                    "payload":"Sale Person"
+                    "title":"Sale Person1",
+                    "payload":"Sale Person1"
                 },
                 {
                     "content_type":"text",
-                    "title":"Not Interested",
-                    "payload":"Not Interested"
+                    "title":"Not Interested1",
+                    "payload":"Not Interested1"
                 }
             ];
 			sendQuickReply(sender,responseText,replies);
