@@ -27,7 +27,7 @@ if (!config.SERVER_URL) { //used for ink to static files
 	throw new Error('missing SERVER_URL');
 }
 
-
+console.log('Started');
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -202,6 +202,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                     "payload":"Not Interested1"
                 }
             ];
+			console.log(replies);
 			sendQuickReply(sender,responseText,replies);
 			break;
 		default:
