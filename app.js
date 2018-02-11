@@ -708,7 +708,7 @@ function greetUserText(userId) {
  *
  */
 function callSendAPI(messageData) {
-	console.log("facebook return message:"+messageData);
+    console.log('contexts:'+JSON.stringify(messageData));
 	request({
 		uri: 'https://graph.facebook.com/v2.6/me/messages',
 		qs: {
