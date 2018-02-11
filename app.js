@@ -189,18 +189,18 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			let replies=[
                 {
                     "content_type":"text",
-                    "title":"Accountant1",
-                    "payload":"Accountant1"
+                    "title":"Accountant",
+                    "payload":"Accountant"
                 },
                 {
                     "content_type":"text",
-                    "title":"Sale Person1",
-                    "payload":"Sale Person1"
+                    "title":"Sale Person",
+                    "payload":"Sale Person"
                 },
                 {
                     "content_type":"text",
-                    "title":"Not Interested1",
-                    "payload":"Not Interested1"
+                    "title":"Not Interested",
+                    "payload":"Not Interested"
                 }
             ];
 			console.log(replies);
