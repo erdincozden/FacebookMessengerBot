@@ -299,10 +299,10 @@ function handleApiAiResponse(sender, response) {
 	sendTypingOff(sender);
     console.log('responseText:'+responseText);
     console.log('responseData:'+responseData);
-    console.log('messages:'+messages);
+    console.log('messages:'+JSON.stringify(messages));
     console.log('action:'+action);
     console.log('contexts:'+contexts);
-    console.log('parameters:'+parameters);
+    console.log('parameters:'+JSON.stringify(parameters));
 	if (isDefined(messages) && (messages.length == 1 && messages[0].type != 0 || messages.length > 1)) {
 		let timeoutInterval = 1100;
 		let previousType ;
