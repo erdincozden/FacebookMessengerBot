@@ -301,8 +301,9 @@ function handleApiAiResponse(sender, response) {
     console.log('responseData:'+responseData);
     console.log('messages:'+JSON.stringify(messages));
     console.log('action:'+action);
-    console.log('contexts:'+contexts);
+    console.log('contexts:'+JSON.stringify(contexts));
     console.log('parameters:'+JSON.stringify(parameters));
+    /*
 	if (isDefined(messages) && (messages.length == 1 && messages[0].type != 0 || messages.length > 1)) {
 		let timeoutInterval = 1100;
 		let previousType ;
@@ -334,7 +335,8 @@ function handleApiAiResponse(sender, response) {
 			previousType = messages[i].type;
 
 		}
-	} else if (responseText == '' && !isDefined(action)) {
+	} else*/
+    if (responseText == '' && !isDefined(action)) {
 		//api ai could not evaluate input.
 		console.log('Unknown query' + response.result.resolvedQuery);
 		sendTextMessage(sender, "I'm not sure what you want. Can you be more specific?");
