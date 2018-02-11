@@ -1,7 +1,7 @@
 module.exports = {
-    FB_PAGE_TOKEN: 'EAADqZC8ZBmol0BAGNJrKlGyUztDQE0vBL1Osktuh45AuveYwZBGZAWlKOunVcOFvMvOgZBVAcYqlTbN4DajeZC1dh6vVF9VmZClncmtF2vGEAb0JdiNpZB6lu3RwCTcigVqouYundNA033NPZAvVyImu6xmHFThIpxYnxieZCJAdPYakVqLCf6eAdu',
+    FB_PAGE_TOKEN: 'EAAcQsIeLul0BAGJmJEg9huMLMWojcxZC6jhYGZCQYcZAZAFn9YjZBZAmpyxoNZC5Jdevdxbwzy5ZBuSgHZBwJfpavX1yzuqeLaCHbWFYsX7shIr0ZAhpOwII5nX93FORQSUtdOpa0DnWb93ZCqi04UkoaSCq7w1ZBZA78Edjq1buMqCEUJr6CtLWhrLdG',
     FB_VERIFY_TOKEN: '456123',
     API_AI_CLIENT_ACCESS_TOKEN: '53cb007f77f442e5b80f73981bade6e6',
-    FB_APP_SECRET: '7f8950f1fb884849ac360b44f82627d9',
-    SERVER_URL: "https://stormy-fortress-18694.herokuapp.com/",
+    FB_APP_SECRET: '4419cbaef1e7f44739176b0f316944cb',
+    SERVER_URL: "https://warm-thicket-15613.herokuapp.com/",
 };
