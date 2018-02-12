@@ -196,7 +196,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "detailed-application":
             console.log('context:'+JSON.stringify(contexts));
-            if(isDefined(contexts[0])&&context[0].name=='job_application'&&context[0].parameters){
+            if(isDefined(contexts[0])&&contexts[0].name=='job_application'&&contexts[0].parameters){
 				let phone_number=(isDefined(context[0].parameters['phone-number'])&&context[0].parameters['phone-number']!='')
 						?context[0].parameters['phone-number']:'';
                 let user_name=(isDefined(context[0].parameters['user-name'])&&context[0].parameters['user-name']!='')
