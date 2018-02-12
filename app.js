@@ -26,6 +26,15 @@ if (!config.FB_APP_SECRET) {
 if (!config.SERVER_URL) { //used for ink to static files
 	throw new Error('missing SERVER_URL');
 }
+if (!config.SENDGRID_API_KEY) { //used for ink to static files
+    throw new Error('missing SENDGRID_API_KEY');
+}
+if (!config.EMAIL_FROM) { //used for ink to static files
+    throw new Error('missing EMAIL_FROM');
+}
+if (!config.EMAIL_TO) { //used for ink to static files
+    throw new Error('missing EMAIL_TO');
+}
 
 console.log('Started');
 
@@ -185,6 +194,28 @@ function handleEcho(messageId, appId, metadata) {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	console.log("Action:::"+action);
 	switch (action) {
+		case "detailed-application":
+            // noinspection JSAnnotator
+            if(isDefined(contexts[0])&&context[0].name='job_application'&&context[0].parameters){
+				let phone_number=(isDefined(context[0].parameters['phone-number'])&&context[0].parameters['phone-number']!='')
+						?context[0].parameters['phone-number']:'';
+                let user_name=(isDefined(context[0].parameters['user-name'])&&context[0].parameters['user-name']!='')
+                    ?context[0].parameters['user-name']:'';
+                let previous_job=(isDefined(context[0].parameters['previous-job'])&&context[0].parameters['previous-job']!='')
+                    ?context[0].parameters['previous-job']:'';
+                let years_of_experience=(isDefined(context[0].parameters['years-of-experience'])
+							&&context[0].parameters['years-of-experience']!='')?context[0].parameters['years-of-experience']:'';
+                let job_vacancy=(isDefined(context[0].parameters['job-vacancy'])&&context[0].parameters['job-vacancy']!='')
+                    ?context[0].parameters['job-vacancy']:'';
+
+                if(phone_number!=''&&user_name!=''&&previous_job!=''&&years_of_experience!=''&&job_vacancy!=''){
+                	let emailContent='A new job from '+user_name+ ' for the job:'+ job_vacancy+' Previous job '+
+						previous_job+'.<br>  Phone number:'+phone_number;
+                	sendEmail('New Job Application',emailContent);
+				}
+			}
+			sendTextMessage(sender,responseText);
+            break;
 		case "job-enquiry":
 			let replies=[
                 {
@@ -210,6 +241,19 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
 	}
+}
+
+function sendEmail(subject,content){
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(config.SENDGRID_API_KEY);
+    const msg = {
+        to: config.EMAIL_TO,
+        from: config.EMAIL_FROM,
+        subject: subject,
+        text: 'and easy to do anywhere, even with Node.js',
+        html: content,
+    };
+    sgMail.send(msg);
 }
 
 function handleMessage(message, sender) {
