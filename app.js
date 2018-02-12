@@ -197,16 +197,16 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "detailed-application":
             console.log('context:'+JSON.stringify(contexts));
             if(isDefined(contexts[0])&&contexts[0].name=='job_application'&&contexts[0].parameters){
-				let phone_number=(isDefined(context[0].parameters['phone-number'])&&context[0].parameters['phone-number']!='')
-						?context[0].parameters['phone-number']:'';
-                let user_name=(isDefined(context[0].parameters['user-name'])&&context[0].parameters['user-name']!='')
-                    ?context[0].parameters['user-name']:'';
-                let previous_job=(isDefined(context[0].parameters['previous-job'])&&context[0].parameters['previous-job']!='')
-                    ?context[0].parameters['previous-job']:'';
-                let years_of_experience=(isDefined(context[0].parameters['years-of-experience'])
-							&&context[0].parameters['years-of-experience']!='')?context[0].parameters['years-of-experience']:'';
-                let job_vacancy=(isDefined(context[0].parameters['job-vacancy'])&&context[0].parameters['job-vacancy']!='')
-                    ?context[0].parameters['job-vacancy']:'';
+				let phone_number=(isDefined(contexts[0].parameters['phone-number'])&&contexts[0].parameters['phone-number']!='')
+						?contexts[0].parameters['phone-number']:'';
+                let user_name=(isDefined(contexts[0].parameters['user-name'])&&contexts[0].parameters['user-name']!='')
+                    ?contexts[0].parameters['user-name']:'';
+                let previous_job=(isDefined(contexts[0].parameters['previous-job'])&&contexts[0].parameters['previous-job']!='')
+                    ?contexts[0].parameters['previous-job']:'';
+                let years_of_experience=(isDefined(contexts[0].parameters['years-of-experience'])
+							&&contexts[0].parameters['years-of-experience']!='')?contexts[0].parameters['years-of-experience']:'';
+                let job_vacancy=(isDefined(contexts[0].parameters['job-vacancy'])&&contexts[0].parameters['job-vacancy']!='')
+                    ?contexts[0].parameters['job-vacancy']:'';
 
                 if(phone_number!=''&&user_name!=''&&previous_job!=''&&years_of_experience!=''&&job_vacancy!=''){
                 	let emailContent='A new job from '+user_name+ ' for the job:'+ job_vacancy+' Previous job '+
