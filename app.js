@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 const uuid = require('uuid');
-
+requi
 
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
@@ -251,9 +251,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 }
 
 function sendEmail(subject,content){
-    const sgMail = require('@sendgrid/mail');
+    var sgMail = require('sendgrid').mail;
     sgMail.setApiKey(config.SENDGRID_API_KEY);
-    const msg = {
+    var msg = {
         to: config.EMAIL_TO,
         from: config.EMAIL_FROM,
         subject: subject,
