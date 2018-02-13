@@ -251,17 +251,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 }
 
 function sendEmail(subject,content){
-
-    var sendgrid = require("sendgrid")(config.SENDGRID_API_KEY);
-    var email = new sendgrid.Email();
-
-    email.addTo("ozden@live.com");
-    email.setFrom("ozden@live.com");
-    email.setSubject("Sending with SendGrid is Fun");
-    email.setHtml("and easy to do anywhere, even with Node.js");
-
-    sendgrid.send(email);
-
+    
     const sgMail = require('@sendgrid/mail')
     sgMail.setApiKey(config.SENDGRID_API_KEY);
     const msg = {
