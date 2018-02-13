@@ -201,12 +201,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						?contexts[0].parameters['phone-number']:'';
                 let user_name=(isDefined(contexts[0].parameters['user-name'])&&contexts[0].parameters['user-name']!='')
                     ?contexts[0].parameters['user-name']:'';
-                let previous_job=(isDefined(contexts[0].parameters['previous-job'])&&contexts[0].parameters['previous-job']!='')
-                    ?contexts[0].parameters['previous-job']:'';
-                let years_of_experience=(isDefined(contexts[0].parameters['years-of-experience'])
-							&&contexts[0].parameters['years-of-experience']!='')?contexts[0].parameters['years-of-experience']:'';
-                let job_vacancy=(isDefined(contexts[0].parameters['job-vacancy'])&&contexts[0].parameters['job-vacancy']!='')
-                    ?contexts[0].parameters['job-vacancy']:'';
+                let previous_job=(isDefined(contexts[0].parameters['pre-job'])&&contexts[0].parameters['pre-job']!='')
+                    ?contexts[0].parameters['pre-job']:'';
+                let years_of_experience=(isDefined(contexts[0].parameters['years-experience'])
+							&&contexts[0].parameters['years-experience']!='')?contexts[0].parameters['years-experience']:'';
+                let job_vacancy=(isDefined(contexts[0].parameters['jobs-vacony'])&&contexts[0].parameters['jobs-vacony']!='')
+                    ?contexts[0].parameters['jobs-vacony']:'';
 
                 console.log('phone_number...'+phone_number);
                 console.log('user_name...'+user_name);
