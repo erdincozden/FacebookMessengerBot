@@ -250,9 +250,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 }
 
 function sendEmail(subject,content){
-    var sgMail = require('sendgrid').mail;
+    const sgMail = require('sendgrid').mail;
     sgMail.setApiKey(config.SENDGRID_API_KEY);
-    var msg = {
+    const msg = {
         to: config.EMAIL_TO,
         from: config.EMAIL_FROM,
         subject: subject,
