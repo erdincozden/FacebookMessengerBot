@@ -195,6 +195,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "detailed-application":
             console.log('context:'+JSON.stringify(contexts));
+
             if(isDefined(contexts[0])&&contexts[0].name=='job_application'&&contexts[0].parameters){
 				let phone_number=(isDefined(contexts[0].parameters['phone-number'])&&contexts[0].parameters['phone-number']!='')
 						?contexts[0].parameters['phone-number']:'';
@@ -212,7 +213,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 console.log('previous_job...'+previous_job);
                 console.log('years_of_experience...'+years_of_experience);
                 console.log('job_vacancy...'+job_vacancy);
-
+                sendEmail('TEST','content');
                 if(phone_number!=''&&user_name!=''&&previous_job!=''&&years_of_experience!=''&&job_vacancy!=''){
                 	let emailContent='A new job from '+user_name+ ' for the job:'+ job_vacancy+' Previous job '+
 						previous_job+'.<br>  Phone number:'+phone_number;
