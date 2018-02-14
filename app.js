@@ -195,6 +195,31 @@ function handleEcho(messageId, appId, metadata) {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	console.log("Action:::"+action);
 	switch (action) {
+
+        case "faq-delivery-time":
+            sendTextMessage(sender,responseText);
+            sendTypingOn(sender);
+            setTimeout(function(){
+               let buttons=[
+                   {
+                       type:"web_url",
+                       url:"https://www.messenger.com",
+                       title:"Visit Messenger"
+                   },
+                   {
+                       type:"phone_number",
+                       title:"Call Us",
+                       payload:"+1(212)555-2368"
+                   },
+                   {
+                       type:"postback",
+                       title:"Call Us",
+                       payload:"CHAT"
+                   }
+               ];
+                sendButtonMessage(sender,"What would do you next?",buttons)
+            });
+            break;
 		case "detailed-application":
             console.log('context:'+JSON.stringify(contexts));
 
