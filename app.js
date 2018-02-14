@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 const uuid = require('uuid');
+const sendgrid=require('sendgrid');
 
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
@@ -66,7 +67,8 @@ const sessionIds = new Map();
 
 // Index route
 app.get('/', function (req, res) {
-	res.send('Hello world, I am a chat bot')
+    sendEmail('TEST','content');
+	res.send('Hello world, I am a chat bot');
 })
 
 // for Facebook verification
