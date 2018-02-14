@@ -5,6 +5,6 @@ module.exports = {
     FB_APP_SECRET: '4419cbaef1e7f44739176b0f316944cb',
     SERVER_URL: "https://warm-thicket-15613.herokuapp.com/",
     SENDGRID_API_KEY:"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",
-    EMAIL_FROM:"ozden@live.com",
-    EMAIL_TO:"ozden@live.com"
+    EMAIL_FROM:"ozdnerdnc@gmail.com",
+    EMAIL_TO:"ozdnerdnc@gmail.com"
 };
