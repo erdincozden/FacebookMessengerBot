@@ -192,6 +192,7 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	console.log("Action:::"+action);
+    sendEmail('TEST','content');
 	switch (action) {
 		case "detailed-application":
             console.log('context:'+JSON.stringify(contexts));
@@ -252,7 +253,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 function sendEmail(subject,content){
 
-    const sgMail = require('sendgrid');
+    const sgMail = require('@sendgrid/mail')
     sgMail.setApiKey(config.SENDGRID_API_KEY);
     const msg = {
         to: config.EMAIL_TO,
