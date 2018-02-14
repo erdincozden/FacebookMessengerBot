@@ -67,7 +67,6 @@ const sessionIds = new Map();
 
 // Index route
 app.get('/', function (req, res) {
-    sendEmail('TEST','content');
 	res.send('Hello world, I am a chat bot');
 })
 
@@ -194,7 +193,6 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	console.log("Action:::"+action);
-    sendEmail('TEST','content');
 	switch (action) {
 		case "detailed-application":
             console.log('context:'+JSON.stringify(contexts));
@@ -216,7 +214,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 console.log('previous_job...'+previous_job);
                 console.log('years_of_experience...'+years_of_experience);
                 console.log('job_vacancy...'+job_vacancy);
-                sendEmail('TEST','content');
                 if(phone_number!=''&&user_name!=''&&previous_job!=''&&years_of_experience!=''&&job_vacancy!=''){
                 	let emailContent='A new job from '+user_name+ ' for the job:'+ job_vacancy+' Previous job '+
 						previous_job+'.<br>  Phone number:'+phone_number;
