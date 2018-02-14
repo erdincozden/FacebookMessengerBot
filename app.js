@@ -196,7 +196,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	console.log("Action:::"+action);
 	switch (action) {
 
-        case "faq-delivery-time":
+        case "faq-delivery":
             sendTextMessage(sender,responseText);
             sendTypingOn(sender);
             setTimeout(function(){
