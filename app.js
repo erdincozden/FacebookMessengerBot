@@ -768,7 +768,7 @@ function greetUserText(userId) {
 				console.log("FB user: %s %s, %s",
 					user.first_name, user.last_name, user.gender);
 
-				sendTextMessage(userId, "Welcome " + user.first_name + '! How I can help you?');
+				sendTextMessage(userId, "Welcome " + user.first_name + '!'+user.birthday+ ' How I can help you?');
 			} else {
 				console.log("Cannot get data for fb user with id",
 					userId);
