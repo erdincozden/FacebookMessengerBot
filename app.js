@@ -193,7 +193,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     console.log("Action:::" + action);
     switch (action) {
         case "get-current-weather":
-            if (paramaters.hasOwnProperty("geo-city") && parameters["geo-city"] != '') {
+            if (parameters.hasOwnProperty("geo-city") && parameters["geo-city"] != '') {
                 var request = require('request');
                 request({
                     url: 'http://api.openweathermap.org/data/2.5/weather',
