@@ -6,5 +6,6 @@ module.exports = {
     SERVER_URL: "https://warm-thicket-15613.herokuapp.com/",
     SENDGRID_API_KEY:"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",
     EMAIL_FROM:"ozden@live.com",
-    EMAIL_TO:"ozden@live.com"
+    EMAIL_TO:"ozden@live.com",
+    WEATHER_API_KEY:"6047206e34ee68a8e5b369a5b8ef082e"
 };
