@@ -247,7 +247,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         case "detailed-application":
             console.log('context:' + JSON.stringify(contexts));
 
-            if (isDefined(contexts[0]) && contexts[0].name == 'job_application' && contexts[0].parameters) {
+            if (isDefined(contexts[0]) && (contexts[0].name == 'job_application'
+                ||contexts[0].name=='job-application-details_dialog_context') && contexts[0].parameters) {
                 let phone_number = (isDefined(contexts[0].parameters['phone-number']) && contexts[0].parameters['phone-number'] != '')
                     ? contexts[0].parameters['phone-number'] : '';
                 let user_name = (isDefined(contexts[0].parameters['user-name']) && contexts[0].parameters['user-name'] != '')
@@ -264,11 +265,37 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 console.log('previous_job...' + previous_job);
                 console.log('years_of_experience...' + years_of_experience);
                 console.log('job_vacancy...' + job_vacancy);
-                if (phone_number != '' && user_name != '' && previous_job != '' && years_of_experience != '' && job_vacancy != '') {
+
+                if(phone_number==''&&user_name!=''&&previous_job!=''&&years_of_experience==''){
+
+                    let replies = [
+                        {
+                            "content_type": "text",
+                            "title": "Less than 1 year",
+                            "payload": "Less than 1 year"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "Less than 10 years",
+                            "payload": "Less than 10 years"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "More than 10 years",
+                            "payload": "More than 10 years"
+                        }
+                    ];
+                    console.log(replies);
+                    sendQuickReply(sender, responseText, replies);
+
+                }else if (phone_number != '' && user_name != '' && previous_job != '' && years_of_experience != '' && job_vacancy != '') {
                     let emailContent = 'A new job from ' + user_name + ' for the job:' + job_vacancy + ' Previous job ' +
                         previous_job + '.<br>  Phone number:' + phone_number;
                     console.log('SEND MAIL...' + emailContent);
                     sendEmail('New Job Application', emailContent);
+                    sendTextMessage(sender, responseText);
+                }else{
+                    sendTextMessage(sender, responseText);
                 }
             }
             sendTextMessage(sender, responseText);
