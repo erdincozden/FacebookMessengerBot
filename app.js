@@ -266,7 +266,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 console.log('years_of_experience...' + years_of_experience);
                 console.log('job_vacancy...' + job_vacancy);
 
-                if(phone_number==''&&user_name!=''&&previous_job!=''&&years_of_experience==''){
+                if (phone_number == '' && user_name != '' && previous_job != '' && years_of_experience == '') {
 
                     let replies = [
                         {
@@ -288,17 +288,16 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                     console.log(replies);
                     sendQuickReply(sender, responseText, replies);
 
-                }else if (phone_number != '' && user_name != '' && previous_job != '' && years_of_experience != '' && job_vacancy != '') {
+                } else if (phone_number != '' && user_name != '' && previous_job != '' && years_of_experience != '' && job_vacancy != '') {
                     let emailContent = 'A new job from ' + user_name + ' for the job:' + job_vacancy + ' Previous job ' +
                         previous_job + '.<br>  Phone number:' + phone_number;
                     console.log('SEND MAIL...' + emailContent);
                     sendEmail('New Job Application', emailContent);
                     sendTextMessage(sender, responseText);
-                }else{
+                } else {
                     sendTextMessage(sender, responseText);
                 }
             }
-            sendTextMessage(sender, responseText);
             break;
         case "job-enquiry":
             let replies = [
