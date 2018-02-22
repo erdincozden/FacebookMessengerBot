@@ -7,5 +7,14 @@ module.exports = {
     SENDGRID_API_KEY:"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",
     EMAIL_FROM:"ozden@live.com",
     EMAIL_TO:"ozden@live.com",
-    WEATHER_API_KEY:"6047206e34ee68a8e5b369a5b8ef082e"
+    WEATHER_API_KEY:"6047206e34ee68a8e5b369a5b8ef082e",
+    PG_CONFIG: {
+        user:'darfytvgbgwrco',
+        database: 'd1dnv2es2ce5oe',
+        password: 'a01a53c82fb0ff25f817f7652be3f61b8274c97f18d3300883680fe82dd0e528',
+        host: 'ec2-54-247-95-125.eu-west-1.compute.amazonaws.com',
+        port: 5432,
+        max: 10,
+        idleTimeoutMillis: 30000,
+    },
 };

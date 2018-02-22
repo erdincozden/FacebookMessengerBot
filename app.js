@@ -41,6 +41,10 @@ if (!config.EMAIL_TO) { //used for ink to static files
 if (!config.WEATHER_API_KEY) {
     throw new Error('missing WEATHER_API_KEY');
 }
+if (!config.PG_CONFIG) {
+    throw new Error('missing PG_CONFIG');
+}
+
 
 console.log('Started');
 
@@ -841,7 +845,6 @@ function greetUserText(userId) {
                                             userId,
                                             user.first_name,
                                             user.last_name,
-                                            user.profile_pic,
                                             user.locale,
                                             user.timezone,
                                             user.gender
