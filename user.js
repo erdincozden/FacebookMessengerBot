@@ -1,6 +1,6 @@
 'use strict';
 const request=require('request');
-const config=require('.config');
+const config=require('./config');
 const pg=require('pg');
 pg.defaults.ssl=true;
 
