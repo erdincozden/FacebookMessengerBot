@@ -9,6 +9,9 @@ const request = require('request');
 const app = express();
 const uuid = require('uuid');
 const sendgrid = require('sendgrid');
+const pg=require('pg');
+
+pg.defaults.ssl=true;
 
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
@@ -801,7 +804,7 @@ function sendAccountLinking(recipientId) {
 function greetUserText(userId) {
     //first read user firstname
     request({
-        uri: 'https://graph.facebook.com/v2.7/' + userId,
+        uri: 'https://graph.facebook.com/v2.7/' + userId+'?fields=id,first_name,last_name,locale,gender,timezone,picture',
         qs: {
             access_token: config.FB_PAGE_TOKEN
         }
@@ -810,11 +813,45 @@ function greetUserText(userId) {
         if (!error && response.statusCode == 200) {
 
             var user = JSON.parse(body);
-
+            console.log(user);
             if (user.first_name) {
                 console.log("FB user: %s %s, %s",
                     user.first_name, user.last_name, user.gender);
 
+                var pool = new pg.Pool(config.PG_CONFIG);
+                pool.connect(function(err, client, done) {
+                    if (err) {
+                        return console.error('Error acquiring client', err.stack);
+                    }
+                    var rows = [];
+                    console.log('fetching user');
+                    client.query(`SELECT id FROM users WHERE fb_id='${userId}' LIMIT 1`,
+                        function(err, result) {
+                            console.log('query result ' + result);
+                            if (err) {
+                                console.log('Query error: ' + err);
+                            } else {
+                                console.log('rows: ' + result.rows.length);
+                                if (result.rows.length === 0) {
+                                    let sql = 'INSERT INTO users (fb_id, first_name, last_name, ' +
+                                        'locale, timezone, gender) VALUES ($1, $2, $3, $4, $5, $6)';
+                                    console.log('sql: ' + sql);
+                                    client.query(sql,
+                                        [
+                                            userId,
+                                            user.first_name,
+                                            user.last_name,
+                                            user.profile_pic,
+                                            user.locale,
+                                            user.timezone,
+                                            user.gender
+                                        ]);
+                                }
+                            }
+                        });
+
+                });
+                pool.end();
                 sendTextMessage(userId, "Welcome " + user.first_name + '!' + user.birthday + ' How I can help you?');
             } else {
                 console.log("Cannot get data for fb user with id",
