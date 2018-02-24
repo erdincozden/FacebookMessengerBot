@@ -17,7 +17,7 @@ module.exports = {
                     'SELECT color FROM iphone_colors',
                     function(err, result) {
                         if (err) {
-                            console.log("ERR:"+err);
+                            console.log("ERR:"+err+" result:"+result);
                             callback([]);
                         } else {
                             console.log("BASARILI:"+result.rows.length);
