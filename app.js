@@ -11,6 +11,7 @@ const uuid = require('uuid');
 const sendgrid = require('sendgrid');
 const pg=require('pg');
 const userData=require('./user');
+const colors=require('./colors');
 
 pg.defaults.ssl=true;
 
@@ -209,6 +210,15 @@ function handleEcho(messageId, appId, metadata) {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     console.log("Action:::" + action);
     switch (action) {
+
+        case "iphone-colors":
+            colors.readAllColors(function(allColors){
+                let allColorsString=allColors.join(', ');
+                let reply=`Iphone available : $allColorsString.What is your favorite color?`;
+                sendTextMessage(sender,reply);
+                
+            });
+            break;
         case "get-current-weather":
             if (parameters.hasOwnProperty("geo-city") && parameters["geo-city"] != '') {
                 var request = require('request');
@@ -818,7 +828,7 @@ function sendAccountLinking(recipientId) {
 function greetUserText(userId) {
 
     let user=usersMap.get(userId);
-    sendTextMessage(userId, "Welcome " + user.first_name + '!' + user.birthday + ' How I can help you?');
+    sendTextMessage(userId, "Welcome " + user.first_name + '!' + user.gender + ' How I can help you?');
 
 }
 
