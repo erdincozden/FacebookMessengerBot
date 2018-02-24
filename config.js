@@ -14,7 +14,7 @@ module.exports = {
         password: 'a01a53c82fb0ff25f817f7652be3f61b8274c97f18d3300883680fe82dd0e528',
         host: 'ec2-54-247-95-125.eu-west-1.compute.amazonaws.com',
         port: 5432,
-        max: 10,
+        max: 100,
         idleTimeoutMillis: 3000,
     },
 };
