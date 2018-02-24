@@ -216,7 +216,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 let allColorsString=allColors.join(', ');
                 let reply=`Iphone available : $allColorsString.What is your favorite color?`;
                 sendTextMessage(sender,reply);
-                
+
             });
             break;
         case "get-current-weather":
