@@ -1,7 +1,7 @@
 'use strict';
 const request=require('request');
 const config=require('./config');
-const pg=require('pg');
+const pg=require('pg').native;
 pg.defaults.ssl=true;
 
 module.exports=function(callback,userId){
