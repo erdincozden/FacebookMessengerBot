@@ -14,7 +14,7 @@ module.exports = {
             }
             client
                 .query(
-                    'SELECT color FROM iphone_colors',
+                    'SELECT color FROM public.iphone_colors',
                     function(err, result) {
                         if (err) {
                             console.log("ERR:"+err+" result:"+result);

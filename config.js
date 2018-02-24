@@ -15,6 +15,6 @@ module.exports = {
         host: 'ec2-54-247-95-125.eu-west-1.compute.amazonaws.com',
         port: 5432,
         max: 10,
-        idleTimeoutMillis: 30000,
+        idleTimeoutMillis: 3000,
     },
 };
