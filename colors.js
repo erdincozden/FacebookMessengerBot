@@ -14,12 +14,13 @@ module.exports = {
             }
             client
                 .query(
-                    'SELECT color FROM public.iphone_colors',
+                    'SELECT color FROM iphone_colors',
                     function(err, result) {
                         if (err) {
-                            console.log(err);
+                            console.log("ERR:"+err);
                             callback([]);
                         } else {
+                            console.log("BASARILI:"+result.rows.length);
                             let colors = [];
                             for (let i = 0; i < result.rows.length; i++) {
                                 colors.push(result.rows[i]['color']);
