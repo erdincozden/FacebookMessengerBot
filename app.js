@@ -11,8 +11,9 @@ const uuid = require('uuid');
 const sendgrid = require('sendgrid');
 const pg=require('pg');
 const userData=require('./user');
+/*
 const colors=require('./colors');
-
+*/
 pg.defaults.ssl=true;
 
 // Messenger API parameters
@@ -211,14 +212,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     console.log("Action:::" + action);
     switch (action) {
 
-        case "iphone-colors":
+      /*  case "iphone-colors":
             colors.readAllColors(function(allColors){
                 let allColorsString=allColors.join(', ');
                 let reply=`Iphone available : ${allColorsString}.What is your favorite color?`;
                 sendTextMessage(sender,reply);
 
             });
-            break;
+            break;*/
         case "get-current-weather":
             if (parameters.hasOwnProperty("geo-city") && parameters["geo-city"] != '') {
                 var request = require('request');
