@@ -223,8 +223,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 } else {
                     reply=`Would you like ${color}`?;
                 }
-                sendTextMessage(sender, reply);;
-            }, sender);
+                sendTextMessage(sender, reply);
+                }, sender);
 
             break;
         case "iphone8_colors.favorite":
