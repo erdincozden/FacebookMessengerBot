@@ -25,6 +25,7 @@ module.exports=function(callback,userId){
                 pool.connect(function(err, client, done) {
                     done();
                     pool.end();
+                    client.end();
                     if (err) {
                         return console.error('Error acquiring client', err.stack);
                         done();
