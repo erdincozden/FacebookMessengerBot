@@ -90,7 +90,7 @@ passport.deserializeUser(function(profile, cb) {
 
 app.set('view engine','ejs');
 
-app.get('/auth/facebook', passport.authenticate('public_profile'));
+app.get('/auth/facebook', passport.authenticate('facebook',{scope:'public_profile'}));
 
 
 app.get('/auth/facebook/callback',
