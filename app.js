@@ -215,6 +215,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     console.log("Action:::" + action);
     switch (action) {
 
+        case "iphone8_colors.favorite":
+            colors.updateUserColor(parameters['color'],sender);
+            let reply=`Ok. I will remember it`;
+            sendTextMessage(sender,reply);
+            break;
         case "iphone-colors":
             colors.readAllColors(function(allColors){
                 let allColorsString=allColors.join(', ');
