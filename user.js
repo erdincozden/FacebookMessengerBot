@@ -20,6 +20,8 @@ module.exports=function(callback,userId){
                 console.log("FB user: %s %s, %s",
                     user.first_name, user.last_name, user.gender);
 
+                //var pool = new pg.Pool();
+
                 pg.connect(process.env.DATABASE_URL, function(err, client) {
                     if (err) throw err;
                     console.log("Searching.......");
