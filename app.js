@@ -140,7 +140,7 @@ app.post('/webhook/', function (req, res) {
 });
 
 function setSessionUser(senderID) {
-    
+
     if (!sessionIds.has(senderID)) {
         sessionIds.set(senderID, uuid.v1());
     }
@@ -202,7 +202,7 @@ function handleMessageAttachments(messageAttachments, senderID) {
 function handleQuickReply(senderID, quickReply, messageId) {
     var quickReplyPayload = quickReply.payload;
     switch(quickReplyPayload){
-        case 'NEWS_PER_WEEK:
+        case 'NEWS_PER_WEEK':
             break;
         case 'NEWS_PER_DAY':
             break;
