@@ -235,7 +235,15 @@ function handleEcho(messageId, appId, metadata) {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     console.log("Action:::" + action);
     switch (action) {
-
+        case "unsubscribe":
+            user.newsletterSettings(function (updated) {
+                if(updated){
+                    sendTextMessage(sender,"unsubscribe succesfull.");
+                }else{
+                    sendTextMessage(sender,"Unavailable. Try later.");
+                }
+            },0,sender);
+            break;
         case "buy.iphone8":
             colors.readUserColor(function (color) {
                 let reply;
