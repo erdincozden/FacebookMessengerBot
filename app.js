@@ -9,11 +9,11 @@ const request = require('request');
 const app = express();
 const uuid = require('uuid');
 const sendgrid = require('sendgrid');
-const pg=require('pg');
-const userData=require('./user');
-const colors=require('./colors');
+const pg = require('pg');
+const userData = require('./user');
+const colors = require('./colors');
 
-pg.defaults.ssl=true;
+pg.defaults.ssl = true;
 
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
@@ -139,18 +139,18 @@ app.post('/webhook/', function (req, res) {
     }
 });
 
-function setSessionUser(senderID){
+function setSessionUser(senderID) {
     if (!sessionIds.has(senderID)) {
         sessionIds.set(senderID, uuid.v1());
     }
-    if(!usersMap.has(senderID)){
+    if (!usersMap.has(senderID)) {
         userData(function (user) {
-            usersMap.set(senderID,user);
-        },senderID);
-    }else{
+            usersMap.set(senderID, user);
+        }, senderID);
+    } else {
         userData(function (user) {
-            usersMap.set(senderID,user);
-        },senderID);
+            usersMap.set(senderID, user);
+        }, senderID);
     }
 }
 
@@ -215,16 +215,28 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     console.log("Action:::" + action);
     switch (action) {
 
+        case "buy.iphone8":
+            colors.readUserColor(function (color) {
+                let reply;
+                if (color === '') {
+                    reply=`What color you want to?`;
+                } else {
+                    reply=`Would you like ${color}`?;
+                }
+                sendTextMessage(sender, reply);;
+            }, sender);
+
+            break;
         case "iphone8_colors.favorite":
-            colors.updateUserColor(parameters['color'],sender);
-            let reply=`Ok. I will remember it`;
-            sendTextMessage(sender,reply);
+            colors.updateUserColor(parameters['color'], sender);
+            let reply = `Ok. I will remember it`;
+            sendTextMessage(sender, reply);
             break;
         case "iphone-colors":
-            colors.readAllColors(function(allColors){
-                let allColorsString=allColors.join(', ');
-                let reply=`Iphone available : ${allColorsString}.What is your favorite color?`;
-                sendTextMessage(sender,reply);
+            colors.readAllColors(function (allColors) {
+                let allColorsString = allColors.join(', ');
+                let reply = `Iphone available : ${allColorsString}.What is your favorite color?`;
+                sendTextMessage(sender, reply);
 
             });
             break;
@@ -234,19 +246,19 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 request({
                     url: 'http://api.openweathermap.org/data/2.5/weather',
                     qs: {
-                        appid:config.WEATHER_API_KEY,
-                        q:parameters["geo-city"],
-                        units:'metric',
-                        lang:'tr'
+                        appid: config.WEATHER_API_KEY,
+                        q: parameters["geo-city"],
+                        units: 'metric',
+                        lang: 'tr'
                     },
                 }, function (error, response, body) {
-                    if (!error&&response.statusCode==200) {
-                        let weather=JSON.parse(body);
-                        if(weather.hasOwnProperty("weather")){
-                            let reply=`${responseText} ${weather["weather"][0]["description"]}`;
-                            sendTextMessage(sender,reply);
-                        }else{
-                            sendTextMessage(sender,`No weather forecast available for ${parameters["geo-city"]}`);
+                    if (!error && response.statusCode == 200) {
+                        let weather = JSON.parse(body);
+                        if (weather.hasOwnProperty("weather")) {
+                            let reply = `${responseText} ${weather["weather"][0]["description"]}`;
+                            sendTextMessage(sender, reply);
+                        } else {
+                            sendTextMessage(sender, `No weather forecast available for ${parameters["geo-city"]}`);
                         }
                     } else {
                         console.log(response.error);
@@ -284,7 +296,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             console.log('context:' + JSON.stringify(contexts));
 
             if (isDefined(contexts[0]) && (contexts[0].name == 'job_application'
-                ||contexts[0].name=='job-application-details_dialog_context') && contexts[0].parameters) {
+                    || contexts[0].name == 'job-application-details_dialog_context') && contexts[0].parameters) {
                 let phone_number = (isDefined(contexts[0].parameters['phone-number']) && contexts[0].parameters['phone-number'] != '')
                     ? contexts[0].parameters['phone-number'] : '';
                 let user_name = (isDefined(contexts[0].parameters['user-name']) && contexts[0].parameters['user-name'] != '')
@@ -836,8 +848,8 @@ function sendAccountLinking(recipientId) {
 
 function greetUserText(userId) {
 
-    let user=usersMap.get(userId);
-    console.log("GreetUSER:"+user);
+    let user = usersMap.get(userId);
+    console.log("GreetUSER:" + user);
     sendTextMessage(userId, "Welcome " + user.first_name + '!' + user.gender + ' How I can help you?');
 
 }
