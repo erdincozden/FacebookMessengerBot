@@ -140,6 +140,7 @@ app.post('/webhook/', function (req, res) {
 });
 
 function setSessionUser(senderID) {
+    
     if (!sessionIds.has(senderID)) {
         sessionIds.set(senderID, uuid.v1());
     }
