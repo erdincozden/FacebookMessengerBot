@@ -144,11 +144,11 @@ function setSessionUser(senderID) {
         sessionIds.set(senderID, uuid.v1());
     }
     if (!usersMap.has(senderID)) {
-        userData(function (user) {
+        userData.addUser(function (user) {
             usersMap.set(senderID, user);
         }, senderID);
-    } else {
-        userData(function (user) {
+    }else{
+        userData.addUser(function (user) {
             usersMap.set(senderID, user);
         }, senderID);
     }
@@ -200,6 +200,12 @@ function handleMessageAttachments(messageAttachments, senderID) {
 
 function handleQuickReply(senderID, quickReply, messageId) {
     var quickReplyPayload = quickReply.payload;
+    switch(quickReplyPayload){
+        case 'NEWS_PER_WEEK:
+            break;
+        case 'NEWS_PER_DAY':
+            break;
+    }
     console.log("Quick reply for message %s with payload %s", messageId, quickReplyPayload);
     //send payload to api.ai
     sendToApiAi(senderID, quickReplyPayload);
@@ -887,7 +893,23 @@ function callSendAPI(messageData) {
     });
 }
 
+function sendFunNewsSubsribe(userId){
+    let responseText=`I can send you some news? How often you want?`;
+    let replies = [
+        {
+            "content_type": "text",
+            "title": "One day",
+            "payload": "NEWS_PER_DAY"
+        },
+        {
+            "content_type": "text",
+            "title": "One week",
+            "payload": "NEWS_PER_WEEK"
+        }
+    ];
 
+    sendQuickReply(userId,responseText,replies);
+}
 /*
  * Postback Event
  *
@@ -906,6 +928,9 @@ function receivedPostback(event) {
     var payload = event.postback.payload;
 
     switch (payload) {
+        case 'FUN_NEWS':
+            sendFunNewsSubsribe(senderID);
+            break;
         case 'GET_STARTED':
             greetUserText(senderID);
             break;
