@@ -23,9 +23,6 @@ module.exports=function(callback,userId){
                 var pool = new pg.Pool(config.PG_CONFIG);
 
                 pool.connect(function(err, client, done) {
-                    done();
-                    pool.end();
-                    client.end();
                     if (err) {
                         return console.error('Error acquiring client', err.stack);
                         done();
