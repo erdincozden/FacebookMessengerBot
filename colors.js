@@ -32,6 +32,9 @@ module.exports = {
                     });
             done();
         });
+        pool.on('error', function (err, client) {
+            console.error('idle client error', err.message, err.stack)
+        });
         pool.end();
     },
 
