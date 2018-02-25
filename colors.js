@@ -20,8 +20,6 @@ module.exports = {
                     function(err, result) {
                         if (err) {
                             console.log("ERR:"+err+" result:"+result);
-                            done();
-                            pool.end();
                             callback([]);
                         } else {
                             console.log("BASARILI:"+result.rows.length);
@@ -29,8 +27,6 @@ module.exports = {
                             for (let i = 0; i < result.rows.length; i++) {
                                 colors.push(result.rows[i]['color']);
                             }
-                            done();
-                            pool.end();
                             callback(colors);
                         };
                     });
