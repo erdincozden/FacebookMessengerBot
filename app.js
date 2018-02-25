@@ -221,7 +221,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 if (color === '') {
                     reply=`What color you want to?`;
                 } else {
-                    reply=`Would you like ${color}`?;
+                    reply=`Would you like ${color} ?`;
                 }
                 sendTextMessage(sender, reply);
                 }, sender);
