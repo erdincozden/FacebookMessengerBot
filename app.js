@@ -203,7 +203,7 @@ function handleQuickReply(senderID, quickReply, messageId) {
     var quickReplyPayload = quickReply.payload;
     switch(quickReplyPayload){
         case 'NEWS_PER_WEEK':
-            user.newsletterSettings(function (updated) {
+            userData.newsletterSettings(function (updated) {
                if(updated){
                     sendTextMessage(senderID,"Per week is successfull record.'unsubscribe from newsletter'");
                }else{
@@ -212,7 +212,7 @@ function handleQuickReply(senderID, quickReply, messageId) {
             },1,senderID);
             break;
         case 'NEWS_PER_DAY':
-            user.newsletterSettings(function (updated) {
+            userData.newsletterSettings(function (updated) {
                 if(updated){
                     sendTextMessage(senderID,"Per week is successfull record.'unsubscribe from newsletter'");
                 }else{
@@ -236,7 +236,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     console.log("Action:::" + action);
     switch (action) {
         case "unsubscribe":
-            user.newsletterSettings(function (updated) {
+            userData.newsletterSettings(function (updated) {
                 if(updated){
                     sendTextMessage(sender,"unsubscribe succesfull.");
                 }else{
