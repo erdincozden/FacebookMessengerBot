@@ -828,7 +828,7 @@ function sendAccountLinking(recipientId) {
 function greetUserText(userId) {
 
     let user=usersMap.get(userId);
-    console.log(user);
+    //console.log(user);
     sendTextMessage(userId, "Welcome " + user.first_name + '!' + user.gender + ' How I can help you?');
 
 }
