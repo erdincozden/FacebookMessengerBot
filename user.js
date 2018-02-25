@@ -1,7 +1,7 @@
 'use strict';
-const request=require('request');
-const config=require('./config');
-const pg=require('pg');
+const request = require('request');
+const config = require('./config');
+const pg = require('pg');
 pg.defaults.ssl=true;
 
 module.exports=function(callback,userId){
@@ -22,41 +22,35 @@ module.exports=function(callback,userId){
 
                 var pool = new pg.Pool(config.PG_CONFIG);
 
-                pool.connect(function(err, client, done) {
-                    if (err) {
-                        return console.error('Error acquiring client', err.stack);
-                        done();
-                    }
+                pool.connect(process.env.DATABASE_URL, function(err, client) {
+                    if (err) throw err;
+                    console.log("Searching.......");
                     var rows = [];
                     console.log('fetching user:'+userId);
-                    client.query(`SELECT id FROM users WHERE fb_id='${userId}' LIMIT 1`,
-                        function(err, result) {
-                            console.log('query result ' + result);
-                            if (err) {
-                                console.log('Query error: ' + err);
-                                console.log(JSON.stringify(err));
-                            } else {
-                                console.log('rows: ' + result.rows.length);
-                                if (result.rows.length === 0) {
-                                    let sql = 'INSERT INTO users (fb_id, first_name, last_name, ' +
-                                        'locale, timezone, gender) VALUES ($1, $2, $3, $4, $5, $6)';
-                                    console.log('sql: ' + sql);
-                                    client.query(sql,
-                                        [
-                                            userId,
-                                            user.first_name,
-                                            user.last_name,
-                                            user.locale,
-                                            user.timezone,
-                                            user.gender
-                                        ]);
-                                }
+                    client
+                        .query(`SELECT id FROM users WHERE fb_id='${userId}' LIMIT 1`)
+                        .on('row',function(row){
+                           rows.push(row);
+                        })
+                        .on('end',()=>{
+                            if(rows.length===0){
+                                let sql = 'INSERT INTO users (fb_id, first_name, last_name, ' +
+                                    'locale, timezone, gender) VALUES ($1, $2, $3, $4, $5, $6)';
+                                client.query(sql,
+                                    [
+                                        userId,
+                                        user.first_name,
+                                        user.last_name,
+                                        user.locale,
+                                        user.timezone,
+                                        user.gender
+                                    ]);
                             }
+
                         });
-                    done();
-                    callback(user);
+
                 });
-                pool.end();
+                callback(user);
             } else {
                 console.log("Cannot get data for fb user with id",
                     userId);
