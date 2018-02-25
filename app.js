@@ -12,6 +12,9 @@ const sendgrid = require('sendgrid');
 const pg = require('pg');
 const userData = require('./user');
 const colors = require('./colors');
+const passport = require('passport')
+const FacebookStrategy = require('passport-facebook').Strategy;
+const session = require('express-session');
 
 pg.defaults.ssl = true;
 
@@ -68,6 +71,44 @@ app.use(bodyParser.urlencoded({
 // Process application/json
 app.use(bodyParser.json())
 
+app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitilized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(profile, cb) {
+    cb(null, profile);
+});
+
+passport.deserializeUser(function(profile, cb) {
+    cb(null, profile);
+});
+
+app.get('/auth/facebook', passport.authenticate('public_profile'));
+
+
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { successRedirect: '/broadcast',
+        failureRedirect: '/' }));
+
+
+
+passport.use(new FacebookStrategy({
+        clientID: config.FB_APP_ID,
+        clientSecret: config.FB_APP_SECRET,
+        callbackURL: config.SERVER_URL + "/auth/facebook/callback"
+    },
+    function (accessToken, refreshToken, profile, cb) {
+        process.nextTick(function () {
+            return cb(null, profile);
+        });
+    }
+));
+
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
     language: "en",
@@ -78,9 +119,36 @@ const usersMap = new Map();
 
 // Index route
 app.get('/', function (req, res) {
-    //sendEmail('Uyarı','Brova Salak, şifre değiştirmekle işler çözülüyor. 10.000 TL yi hazırlayın.');
-    res.send('Hello world, I am a chat bot');
-})
+    res.render('login');
+});
+app.get('/no-access', function (req, res) {
+    res.render('no-access');
+});
+app.get('/broadcast', ensureAuthenticated,function (req, res) {
+    res.render('broadcast',{user:req.user});
+});
+app.post('/broadcast', ensureAuthenticated,function (req, res) {
+    res.render('broadcast-confirm');
+});
+app.get('/broadcast-send', ensureAuthenticated,function (req, res) {
+    res.redirect('broadcast-send');
+});
+app.get('/broadcast-send', ensureAuthenticated,function (req, res) {
+    res.render('broadcast-send');
+});
+app.get('/logout', ensureAuthenticated,function (req, res) {
+    req.logOut();
+    res.redirect('/');
+});
+
+
+function ensureAuthenticated(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    }else{
+        res.redirect('/');
+    }
+}
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
@@ -91,7 +159,7 @@ app.get('/webhook/', function (req, res) {
         console.error("Failed validation. Make sure the validation tokens match.");
         res.sendStatus(403);
     }
-})
+});
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
@@ -148,7 +216,7 @@ function setSessionUser(senderID) {
         userData.addUser(function (user) {
             usersMap.set(senderID, user);
         }, senderID);
-    }else{
+    } else {
         userData.addUser(function (user) {
             usersMap.set(senderID, user);
         }, senderID);
@@ -201,24 +269,24 @@ function handleMessageAttachments(messageAttachments, senderID) {
 
 function handleQuickReply(senderID, quickReply, messageId) {
     var quickReplyPayload = quickReply.payload;
-    switch(quickReplyPayload){
+    switch (quickReplyPayload) {
         case 'NEWS_PER_WEEK':
             userData.newsletterSettings(function (updated) {
-               if(updated){
-                    sendTextMessage(senderID,"Per week is successfull record.'unsubscribe from newsletter'");
-               }else{
-                   sendTextMessage(senderID,"Unavailable. Try later.");
-               }
-            },1,senderID);
+                if (updated) {
+                    sendTextMessage(senderID, "Per week is successfull record.'unsubscribe from newsletter'");
+                } else {
+                    sendTextMessage(senderID, "Unavailable. Try later.");
+                }
+            }, 1, senderID);
             break;
         case 'NEWS_PER_DAY':
             userData.newsletterSettings(function (updated) {
-                if(updated){
-                    sendTextMessage(senderID,"Per week is successfull record.'unsubscribe from newsletter'");
-                }else{
-                    sendTextMessage(senderID,"Unavailable. Try later.");
+                if (updated) {
+                    sendTextMessage(senderID, "Per week is successfull record.'unsubscribe from newsletter'");
+                } else {
+                    sendTextMessage(senderID, "Unavailable. Try later.");
                 }
-            },2,senderID);
+            }, 2, senderID);
             break;
     }
     console.log("Quick reply for message %s with payload %s", messageId, quickReplyPayload);
@@ -237,23 +305,23 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     switch (action) {
         case "unsubscribe":
             userData.newsletterSettings(function (updated) {
-                if(updated){
-                    sendTextMessage(sender,"unsubscribe succesfull.");
-                }else{
-                    sendTextMessage(sender,"Unavailable. Try later.");
+                if (updated) {
+                    sendTextMessage(sender, "unsubscribe succesfull.");
+                } else {
+                    sendTextMessage(sender, "Unavailable. Try later.");
                 }
-            },0,sender);
+            }, 0, sender);
             break;
         case "buy.iphone8":
             colors.readUserColor(function (color) {
                 let reply;
                 if (color === '') {
-                    reply=`What color you want to?`;
+                    reply = `What color you want to?`;
                 } else {
-                    reply=`Would you like ${color} ?`;
+                    reply = `Would you like ${color} ?`;
                 }
                 sendTextMessage(sender, reply);
-                }, sender);
+            }, sender);
 
             break;
         case "iphone8_colors.favorite":
@@ -916,8 +984,8 @@ function callSendAPI(messageData) {
     });
 }
 
-function sendFunNewsSubsribe(userId){
-    let responseText=`I can send you some news? How often you want?`;
+function sendFunNewsSubsribe(userId) {
+    let responseText = `I can send you some news? How often you want?`;
     let replies = [
         {
             "content_type": "text",
@@ -931,8 +999,9 @@ function sendFunNewsSubsribe(userId){
         }
     ];
 
-    sendQuickReply(userId,responseText,replies);
+    sendQuickReply(userId, responseText, replies);
 }
+
 /*
  * Postback Event
  *
