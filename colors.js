@@ -29,6 +29,8 @@ module.exports = {
                             for (let i = 0; i < result.rows.length; i++) {
                                 colors.push(result.rows[i]['color']);
                             }
+                            done();
+                            pool.end();
                             callback(colors);
                         };
                     });
