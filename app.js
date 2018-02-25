@@ -203,8 +203,22 @@ function handleQuickReply(senderID, quickReply, messageId) {
     var quickReplyPayload = quickReply.payload;
     switch(quickReplyPayload){
         case 'NEWS_PER_WEEK':
+            user.newsletterSettings(function (updated) {
+               if(updated){
+                    sendTextMessage(senderID,"Per week is successfull record.'unsubscribe from newsletter'");
+               }else{
+                   sendTextMessage(senderID,"Unavailable. Try later.");
+               }
+            },1,senderID);
             break;
         case 'NEWS_PER_DAY':
+            user.newsletterSettings(function (updated) {
+                if(updated){
+                    sendTextMessage(senderID,"Per week is successfull record.'unsubscribe from newsletter'");
+                }else{
+                    sendTextMessage(senderID,"Unavailable. Try later.");
+                }
+            },2,senderID);
             break;
     }
     console.log("Quick reply for message %s with payload %s", messageId, quickReplyPayload);
