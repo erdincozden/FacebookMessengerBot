@@ -34,6 +34,7 @@ module.exports=function(callback,userId){
                             console.log('query result ' + result);
                             if (err) {
                                 console.log('Query error: ' + err);
+                                console.log(JSON.stringify(err));
                             } else {
                                 console.log('rows: ' + result.rows.length);
                                 if (result.rows.length === 0) {
