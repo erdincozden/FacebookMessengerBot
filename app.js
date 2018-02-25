@@ -146,7 +146,10 @@ app.get('/logout', ensureAuthenticated,function (req, res) {
 
 function ensureAuthenticated(req,res,next){
     if(req.isAuthenticated()){
-        return next();
+        if(req.user.id==='1928042127238497'){
+            return next();
+        }
+        res.redirect('/no-access');
     }else{
         res.redirect('/');
     }
