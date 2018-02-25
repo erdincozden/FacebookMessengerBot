@@ -25,6 +25,9 @@ module.exports=function(callback,userId){
                     if (err) {
                         return console.error('Error acquiring client', err.stack);
                     }
+                    console.log("err:"+err);
+                    console.log("client:"+client);
+                    console.log("done:"+done);
                     var rows = [];
                     console.log('fetching user:'+userId);
                     client.query(`SELECT id FROM users WHERE fb_id='${userId}' LIMIT 1`,
