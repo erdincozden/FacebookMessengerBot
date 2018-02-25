@@ -148,6 +148,10 @@ function setSessionUser(senderID){
         userData(function (user) {
             usersMap.set(senderID,user);
         },senderID);
+    }else{
+        userData(function (user) {
+            usersMap.set(senderID,user);
+        },senderID);
     }
 }
 
