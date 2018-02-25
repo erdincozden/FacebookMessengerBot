@@ -88,6 +88,8 @@ passport.deserializeUser(function(profile, cb) {
     cb(null, profile);
 });
 
+app.set('view engine','ejs');
+
 app.get('/auth/facebook', passport.authenticate('public_profile'));
 
 
