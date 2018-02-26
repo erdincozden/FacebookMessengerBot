@@ -154,7 +154,7 @@ app.post('/broadcast', ensureAuthenticated, function (req, res) {
     //res.render('broadcast-confirm');
 });
 app.get('/broadcast-send', ensureAuthenticated, function (req, res) {
-    let message=req.sesssion.message;
+    let message=req.session.message;
     let users=req.session.users;
     let sender;
     for(let i=0;i<users.length;i++){
