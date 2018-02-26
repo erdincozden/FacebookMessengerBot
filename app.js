@@ -151,7 +151,7 @@ app.post('/broadcast', ensureAuthenticated, function (req, res) {
 
     }, newstype);
 
-    res.render('broadcast-confirm');
+    //res.render('broadcast-confirm');
 });
 app.get('/broadcast-send', ensureAuthenticated, function (req, res) {
     res.redirect('broadcast-send');
