@@ -130,6 +130,17 @@ app.get('/broadcast', ensureAuthenticated,function (req, res) {
     res.render('broadcast',{user:req.user});
 });
 app.post('/broadcast', ensureAuthenticated,function (req, res) {
+    let message=req.body.message;
+    let newstype=parseInt(req.body.newstype,10);
+    req.session.newstype=newstype;
+    req.session.messege=message;
+
+    userData.readAllUsers(function(users){
+       req.session.users=users;
+       res.render('broadcast-confirm',{user:req.user,message:message,users:users,numUsers:users.lenght,newstype:newstype});
+
+    },newstype);
+
     res.render('broadcast-confirm');
 });
 app.get('/broadcast-send', ensureAuthenticated,function (req, res) {
