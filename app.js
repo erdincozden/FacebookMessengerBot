@@ -80,23 +80,24 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function(profile, cb) {
+passport.serializeUser(function (profile, cb) {
     cb(null, profile);
 });
 
-passport.deserializeUser(function(profile, cb) {
+passport.deserializeUser(function (profile, cb) {
     cb(null, profile);
 });
 
-app.set('view engine','ejs');
+app.set('view engine', 'ejs');
 
-app.get('/auth/facebook', passport.authenticate('facebook',{scope:'public_profile'}));
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'public_profile'}));
 
 
 app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { successRedirect: '/broadcast',
-        failureRedirect: '/' }));
-
+    passport.authenticate('facebook', {
+        successRedirect: '/broadcast',
+        failureRedirect: '/'
+    }));
 
 
 passport.use(new FacebookStrategy({
@@ -126,42 +127,51 @@ app.get('/', function (req, res) {
 app.get('/no-access', function (req, res) {
     res.render('no-access');
 });
-app.get('/broadcast', ensureAuthenticated,function (req, res) {
-    res.render('broadcast',{user:req.user});
+app.get('/broadcast', ensureAuthenticated, function (req, res) {
+    res.render('broadcast', {user: req.user});
 });
-app.post('/broadcast', ensureAuthenticated,function (req, res) {
-    let message=req.body.message;
-    let newstype=parseInt(req.body.newstype,10);
-    req.session.newstype=newstype;
-    req.session.messege=message;
+app.post('/broadcast', ensureAuthenticated, function (req, res) {
+    let message = req.body.message;
+    let newstype = parseInt(req.body.newstype, 10);
+    req.session.newstype = newstype;
+    req.session.messege = message;
 
-    userData.readAllUsers(function(users){
-       req.session.users=users;
-       res.render('broadcast-confirm',{user:req.user,message:message,users:users,numUsers:users.length,newstype:newstype});
+    userData.readAllUsers(function (users) {
+        req.session.users = users;
+        console.log("Message:" + message);
+        console.log("users:" + users);
+        console.log("numUsers:" + users.length);
+        res.render('broadcast-confirm', {
+            user: req.user,
+            message: message,
+            users: users,
+            numUsers: users.length,
+            newstype: newstype
+        });
 
-    },newstype);
+    }, newstype);
 
     res.render('broadcast-confirm');
 });
-app.get('/broadcast-send', ensureAuthenticated,function (req, res) {
+app.get('/broadcast-send', ensureAuthenticated, function (req, res) {
     res.redirect('broadcast-send');
 });
-app.get('/broadcast-send', ensureAuthenticated,function (req, res) {
+app.get('/broadcast-send', ensureAuthenticated, function (req, res) {
     res.render('broadcast-send');
 });
-app.get('/logout', ensureAuthenticated,function (req, res) {
+app.get('/logout', ensureAuthenticated, function (req, res) {
     req.logOut();
     res.redirect('/');
 });
 
 
-function ensureAuthenticated(req,res,next){
-    if(req.isAuthenticated()){
-        if(req.user.id==='1928042127238497'){
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        if (req.user.id === '1928042127238497') {
             return next();
         }
         res.redirect('/no-access');
-    }else{
+    } else {
         res.redirect('/');
     }
 }
