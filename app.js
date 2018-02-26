@@ -154,10 +154,23 @@ app.post('/broadcast', ensureAuthenticated, function (req, res) {
     //res.render('broadcast-confirm');
 });
 app.get('/broadcast-send', ensureAuthenticated, function (req, res) {
+    let message=req.sesssion.message;
+    let users=req.session.users;
+    let sender;
+    for(let i=0;i<users.length;i++){
+        sender=users[i].fb_id;
+        sendTextMessage(sender,message);
+    }
     res.redirect('broadcast-send');
 });
 app.get('/broadcast-send', ensureAuthenticated, function (req, res) {
-    res.render('broadcast-send');
+    let newstype=req.session.newstype;
+    let message=req.session.message;
+    let users=req.session.users;
+    req.session.newstype=null;
+    req.session.message=null;
+    req.session.users=null;
+    res.render('broadcast-send',{message:message,users:users,numUsers:users.length,newstype:newstype});
 });
 app.get('/logout', ensureAuthenticated, function (req, res) {
     req.logOut();
