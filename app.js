@@ -137,7 +137,7 @@ app.post('/broadcast', ensureAuthenticated,function (req, res) {
 
     userData.readAllUsers(function(users){
        req.session.users=users;
-       res.render('broadcast-confirm',{user:req.user,message:message,users:users,numUsers:users.lenght,newstype:newstype});
+       res.render('broadcast-confirm',{user:req.user,message:message,users:users,numUsers:users.length,newstype:newstype});
 
     },newstype);
 
