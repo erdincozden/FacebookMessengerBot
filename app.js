@@ -134,7 +134,7 @@ app.post('/broadcast', ensureAuthenticated, function (req, res) {
     let message = req.body.message;
     let newstype = parseInt(req.body.newstype, 10);
     req.session.newstype = newstype;
-    req.session.messege = message;
+    req.session.message = message;
 
     userData.readAllUsers(function (users) {
         req.session.users = users;
@@ -157,6 +157,7 @@ app.get('/broadcast-send', ensureAuthenticated, function (req, res) {
     let message=req.session.message;
     let users=req.session.users;
     let sender;
+    console.log("message_send:"+message);
     for(let i=0;i<users.length;i++){
         sender=users[i].fb_id;
         sendTextMessage(sender,message);
