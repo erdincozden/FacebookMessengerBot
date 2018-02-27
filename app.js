@@ -156,24 +156,24 @@ app.post('/broadcast', ensureAuthenticated, function (req, res) {
     //res.render('broadcast-confirm');
 });
 app.get('/broadcast-send', ensureAuthenticated, function (req, res) {
-    let message=req.session.message;
-    let users=req.session.users;
+    let message = req.session.message;
+    let users = req.session.users;
     let sender;
-    console.log("message_send:"+message);
-    for(let i=0;i<users.length;i++){
-        sender=users[i].fb_id;
-        sendTextMessage(sender,message);
+    console.log("message_send:" + message);
+    for (let i = 0; i < users.length; i++) {
+        sender = users[i].fb_id;
+        sendTextMessage(sender, message);
     }
     res.redirect('broadcast-send');
 });
 app.get('/broadcast-send', ensureAuthenticated, function (req, res) {
-    let newstype=req.session.newstype;
-    let message=req.session.message;
-    let users=req.session.users;
-    req.session.newstype=null;
-    req.session.message=null;
-    req.session.users=null;
-    res.render('broadcast-send',{message:message,users:users,numUsers:users.length,newstype:newstype});
+    let newstype = req.session.newstype;
+    let message = req.session.message;
+    let users = req.session.users;
+    req.session.newstype = null;
+    req.session.message = null;
+    req.session.users = null;
+    res.render('broadcast-send', {message: message, users: users, numUsers: users.length, newstype: newstype});
 });
 app.get('/logout', ensureAuthenticated, function (req, res) {
     req.logOut();
@@ -364,7 +364,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 }
                 sendTextMessage(sender, reply);
             }, sender);
-
+            sendGenericMessage(sender, '');
             break;
         case "iphone8_colors.favorite":
             colors.updateUserColor(parameters['color'], sender);
@@ -841,6 +841,30 @@ function sendButtonMessage(recipientId, text, buttons) {
 
 
 function sendGenericMessage(recipientId, elements) {
+    let replies = [
+        {
+            "title": "Welcome!",
+            "image_url": "https://petersfancybrownhats.com/company_image.png",
+            "subtitle": "We have the right hat for everyone.",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://petersfancybrownhats.com/view?item=103",
+                "messenger_extensions": false,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://petersfancybrownhats.com/"
+            },
+            "buttons": [
+                {
+                    "type": "web_url",
+                    "url": "https://petersfancybrownhats.com",
+                    "title": "View Website"
+                }, {
+                    "type": "postback",
+                    "title": "Start Chatting",
+                    "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                }
+            ]
+        }];
     var messageData = {
         recipient: {
             id: recipientId
@@ -850,7 +874,7 @@ function sendGenericMessage(recipientId, elements) {
                 type: "template",
                 payload: {
                     template_type: "generic",
-                    elements: elements
+                    elements: replies
                 }
             }
         }
