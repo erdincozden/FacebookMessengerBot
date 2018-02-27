@@ -844,19 +844,19 @@ function sendGenericMessage(recipientId, elements) {
     let replies = [
         {
             "title": "Welcome!",
-            "image_url": "https://petersfancybrownhats.com/company_image.png",
+            "image_url": "http://idora.milliyet.com.tr/YeniAnaResim/2018/02/28/survivor-da-kim-elendi-survivor-da-diskalifiye-surprizi--10907695.Jpeg",
             "subtitle": "We have the right hat for everyone.",
             "default_action": {
                 "type": "web_url",
-                "url": "https://petersfancybrownhats.com/view?item=103",
+                "url": "http://www.milliyet.com.tr/",
                 "messenger_extensions": false,
                 "webview_height_ratio": "tall",
-                "fallback_url": "https://petersfancybrownhats.com/"
+                "fallback_url": "http://www.milliyet.com.tr/"
             },
             "buttons": [
                 {
                     "type": "web_url",
-                    "url": "https://petersfancybrownhats.com",
+                    "url": "http://www.milliyet.com.tr/",
                     "title": "View Website"
                 }, {
                     "type": "postback",
