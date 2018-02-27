@@ -14,16 +14,21 @@ const options = {
     form: {
         ilce: 'Bağcılar',
         islem: 'get_ilce_eczane',
-        jx:'1',
-        h:'311a06933e9f31159a62e56163e584e4'
+        jx: '1',
+        h: '311a06933e9f31159a62e56163e584e4'
     }
 };
 
 module.exports = {
     listPharmacy: function (userId) {
         request(options, function (error, response, body) {
-            let json = JSON.parse(body);
-            console.log(json);
+            if (!error && response.statusCode == 200) {
+                let json = JSON.parse(body);
+                console.log(json.eczaneler.length);
+                console.log(json);
+            }else {
+                console.error(response.error);
+            }
         });
     }
 }
