@@ -502,6 +502,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                     "content_type": "text",
                     "title": "Not Interested",
                     "payload": "Not Interested"
+                },
+                {
+                    "content_type": "location"
                 }
             ];
             console.log(replies);
