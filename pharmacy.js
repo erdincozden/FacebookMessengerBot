@@ -24,19 +24,23 @@ module.exports = {
         request(options, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 let json = JSON.parse(body);
-                let lengthJson=json.eczaneler.length;
-                console.log(json.eczaneler.length);
-                for(let i=0;i<lengthJson;i++){
-                    console.log('------'+(i+1)+'------');
-                    console.log(json.eczaneler[i].sicil);
-                    console.log(json.eczaneler[i].eczane_ad);
-                    console.log(json.eczaneler[i].eczane_tel);
-                    console.log(json.eczaneler[i].tarif);
-                    console.log(json.eczaneler[i].lat);
-                    console.log(json.eczaneler[i].lng);
+                if (json.error == 0) {
+                    let lengthJson = json.eczaneler.length;
+                    console.log(json.eczaneler.length);
+                    for (let i = 0; i < lengthJson; i++) {
+                        console.log('------' + (i + 1) + '------');
+                        console.log(json.eczaneler[i].sicil);
+                        console.log(json.eczaneler[i].eczane_ad);
+                        console.log(json.eczaneler[i].eczane_tel);
+                        console.log(json.eczaneler[i].tarif);
+                        console.log(json.eczaneler[i].lat);
+                        console.log(json.eczaneler[i].lng);
+                    }
+                }else{
+                    console.error('Eczane listesi hata aldı');
                 }
-           //     console.log(json);
-            }else {
+                //     console.log(json);
+            } else {
                 console.error(response.error);
             }
         });
