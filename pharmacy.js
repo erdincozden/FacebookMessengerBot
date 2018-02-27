@@ -27,9 +27,15 @@ module.exports = {
                 let lengthJson=json.eczaneler.length;
                 console.log(json.eczaneler.length);
                 for(let i=0;i<lengthJson;i++){
+                    console.log('------'+(i+1)+'------');
+                    console.log(json.eczaneler[i].sicil);
                     console.log(json.eczaneler[i].eczane_ad);
+                    console.log(json.eczaneler[i].eczane_tel);
+                    console.log(json.eczaneler[i].tarif);
+                    console.log(json.eczaneler[i].lat);
+                    console.log(json.eczaneler[i].lng);
                 }
-                console.log(json);
+           //     console.log(json);
             }else {
                 console.error(response.error);
             }
