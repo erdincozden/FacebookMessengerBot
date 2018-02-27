@@ -355,6 +355,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             }, 0, sender);
             break;
         case "buy.iphone8":
+
+            /*
             colors.readUserColor(function (color) {
                 let reply;
                 if (color === '') {
@@ -363,7 +365,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                     reply = `Would you like ${color} ?`;
                 }
                 sendTextMessage(sender, reply);
-            }, sender);
+            }, sender);*/
             sendGenericMessage(sender, '');
             break;
         case "iphone8_colors.favorite":
