@@ -24,7 +24,11 @@ module.exports = {
         request(options, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 let json = JSON.parse(body);
+                let lengthJson=json.eczaneler.length;
                 console.log(json.eczaneler.length);
+                for(let i=0;i<lengthJson;i++){
+                    console.log(json.eczaneler[i].eczane_ad);
+                }
                 console.log(json);
             }else {
                 console.error(response.error);
