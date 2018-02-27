@@ -846,7 +846,6 @@ function sendGenericMessage(recipientId, elements) {
     let replies = [
         {
             "title": "Welcome!",
-            "image_url": "http://idora.milliyet.com.tr/YeniAnaResim/2018/02/28/survivor-da-kim-elendi-survivor-da-diskalifiye-surprizi--10907695.Jpeg",
             "subtitle": "We have the right hat for everyone.",
             "default_action": {
                 "type": "web_url",
