@@ -15,6 +15,7 @@ const colors = require('./colors');
 const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy;
 const session = require('express-session');
+const pharmacy = require('./pharmacy');
 
 pg.defaults.ssl = true;
 
@@ -122,6 +123,7 @@ const usersMap = new Map();
 
 // Index route
 app.get('/', function (req, res) {
+    pharmacy.listPharmacy(1);
     res.render('login');
 });
 app.get('/no-access', function (req, res) {
